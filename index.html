@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For Naeemah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blush:#f7e1e4; --cream:#fff9f2; --rose:#c9707f; --wine:#6b2d3c; --gold:#c9a24b; --ink:#4a2a35;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  background:radial-gradient(circle at 50% 0%, #fdeef0 0%, var(--blush) 60%, #f0cdd3 100%);
+  color:var(--ink);
+  font-family:"Cormorant Garamond",Georgia,serif;
+  display:flex;align-items:center;justify-content:center;
+  padding:48px 20px;overflow-x:hidden;
+}
+
+/* ---------- gate ---------- */
+#gate{
+  position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 0%, #fdeef0 0%, var(--blush) 60%, #f0cdd3 100%);
+  cursor:pointer;z-index:5;border:0;width:100%;color:var(--wine);
+  transition:opacity .9s ease, visibility .9s;
+}
+#gate.gone{opacity:0;visibility:hidden}
+#gate svg{width:min(78vw,340px);height:auto;transition:transform .8s ease}
+#gate:hover svg{transform:rotate(-1.5deg) scale(1.02)}
+#gate.gone svg{transform:scale(1.25) translateY(-30px)}
+#gate p{margin-top:18px;font-size:1.25rem;font-style:italic}
+#gate .name{font-family:"Caveat",cursive;font-size:2.2rem;margin-bottom:6px;color:var(--rose)}
+.sway{transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
+
+/* ---------- letter ---------- */
+#letter{
+  position:relative;width:min(100%,470px);
+  background-color:var(--cream);
+  /* ruled lines, 36px apart, to match the text line-height */
+  background-image:
+    linear-gradient(90deg, transparent 52px, rgba(201,112,127,.45) 52px, rgba(201,112,127,.45) 53px, transparent 53px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 35px, rgba(107,45,60,.13) 35px, rgba(107,45,60,.13) 36px);
+  background-position:0 0, 0 12px;
+  padding:48px 30px 36px 70px;
+  border-radius:3px;
+  box-shadow:0 22px 44px rgba(107,45,60,.2), 0 1px 3px rgba(107,45,60,.15);
+  transform:rotate(-.7deg) translateY(16px);
+  opacity:0;
+  transition:opacity 1s ease .5s, transform 1.1s ease .5s;
+}
+#letter.show{opacity:1;transform:rotate(-.7deg)}
+/* fold creases */
+#letter::before,#letter::after{
+  content:"";position:absolute;left:0;right:0;height:14px;pointer-events:none;
+  background:linear-gradient(to bottom, rgba(107,45,60,.06), transparent 60%, rgba(255,255,255,.5));
+}
+#letter::before{top:33%}
+#letter::after{top:66%}
+.stamp{position:absolute;top:-24px;right:24px;width:76px;height:76px;filter:drop-shadow(0 4px 5px rgba(0,0,0,.22));z-index:2}
+
+.hand{font-family:"Caveat","Segoe Script",cursive;font-weight:500;font-size:1.65rem;line-height:36px;color:var(--ink)}
+.hand p{margin:0 0 36px}
+.hand .hi{font-size:2rem;font-weight:600;margin-bottom:36px}
+.hand .ask{font-weight:600;margin-bottom:12px}
+.sign{font-family:"Caveat",cursive;font-weight:600;font-size:2.3rem;line-height:36px;color:var(--rose);transform:rotate(-3deg);transform-origin:left;margin-bottom:24px}
+.tag{font-family:"Caveat",cursive;font-size:1.2rem;line-height:24px;opacity:.7;margin-bottom:22px}
+
+.choices{position:relative;display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:130px;margin-top:6px}
+.btn{
+  font:600 1.2rem "Cormorant Garamond",Georgia,serif;
+  padding:12px 26px;border-radius:40px;cursor:pointer;text-decoration:none;
+  border:1.5px solid var(--wine);background:transparent;color:var(--wine);
+  transition:background .25s, color .25s, transform .25s, opacity .45s;
+}
+.yes{
+  background:var(--wine);color:var(--cream);
+  box-shadow:0 0 0 3px var(--cream), 0 0 0 4px var(--gold);
+}
+.yes:hover,.yes:focus-visible{background:var(--rose);border-color:var(--rose);transform:translateY(-2px)}
+.maybe{position:absolute;left:0;top:76px;transition:left .28s ease, top .28s ease}
+.no.vanish{opacity:0;transform:scale(.6);pointer-events:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+@media (max-width:420px){
+  #letter{padding:44px 20px 30px 58px}
+  #letter{background-position:-8px 0, 0 12px}
+  .hand{font-size:1.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .sway{animation:none}
+  #gate,#letter,#gate svg{transition-duration:.01s;transition-delay:0s}
+}
+</style>
+</head>
+<body>
+
+<button id="gate" aria-label="Tap the flowers to open">
+  <div class="name">Naeemah</div>
+  <svg viewBox="0 0 300 340" class="sway" aria-hidden="true">
+    <g stroke="#7d9a6a" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M150 330 C148 270 120 210 92 150"/>
+      <path d="M150 330 C150 260 150 200 150 120"/>
+      <path d="M150 330 C152 270 182 210 212 150"/>
+      <path d="M150 330 C140 280 82 240 58 200"/>
+      <path d="M150 330 C160 280 218 240 242 200"/>
+    </g>
+    <g fill="#8fae7b">
+      <ellipse cx="118" cy="232" rx="16" ry="7" transform="rotate(-35 118 232)"/>
+      <ellipse cx="184" cy="232" rx="16" ry="7" transform="rotate(35 184 232)"/>
+      <ellipse cx="150" cy="190" rx="14" ry="6" transform="rotate(-70 150 190)"/>
+    </g>
+    <g>
+      <circle cx="58" cy="192" r="22" fill="#f2b6c0"/><circle cx="58" cy="192" r="12" fill="#e58b9b"/>
+      <circle cx="242" cy="192" r="22" fill="#f2b6c0"/><circle cx="242" cy="192" r="12" fill="#e58b9b"/>
+    </g>
+    <g>
+      <circle cx="92" cy="140" r="34" fill="#f6c9d0"/><circle cx="92" cy="140" r="22" fill="#e9909f"/><circle cx="92" cy="140" r="10" fill="#c9707f"/>
+      <circle cx="212" cy="140" r="34" fill="#f6c9d0"/><circle cx="212" cy="140" r="22" fill="#e9909f"/><circle cx="212" cy="140" r="10" fill="#c9707f"/>
+      <circle cx="150" cy="104" r="40" fill="#fbdde2"/><circle cx="150" cy="104" r="27" fill="#ee9fac"/><circle cx="150" cy="104" r="13" fill="#c9707f"/>
+    </g>
+    <g fill="#fff4e6"><circle cx="122" cy="62" r="7"/><circle cx="182" cy="66" r="6"/><circle cx="40" cy="150" r="6"/><circle cx="262" cy="152" r="6"/></g>
+    <path d="M118 290 L182 290 L176 316 L124 316 Z" fill="#c9a24b"/>
+    <path d="M150 298 C130 282 118 296 128 306 C136 312 148 306 150 298 C152 306 164 312 172 306 C182 296 170 282 150 298Z" fill="#e0bf6a" stroke="#9a7a2e" stroke-width="1.5"/>
+  </svg>
+  <p>tap the flowers</p>
+</button>
+
+<main id="letter">
+  <svg class="stamp" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <radialGradient id="g" cx="35%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#f3d98a"/><stop offset=".6" stop-color="#c9a24b"/><stop offset="1" stop-color="#9a7a2e"/>
+      </radialGradient>
+    </defs>
+    <path d="M50 4 L58 10 L68 6 L73 15 L84 16 L86 27 L95 33 L91 43 L97 52 L90 60 L92 71 L82 75 L78 86 L67 86 L60 94 L50 89 L40 94 L33 86 L22 86 L18 75 L8 71 L10 60 L3 52 L9 43 L5 33 L14 27 L16 16 L27 15 L32 6 L42 10 Z" fill="url(#g)"/>
+    <circle cx="50" cy="50" r="29" fill="none" stroke="#7a5f1f" stroke-width="2" opacity=".6"/>
+    <text x="50" y="62" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="38" fill="#7a5f1f">A</text>
+  </svg>
+
+  <div class="hand">
+    <div class="hi">Hey Naeemah,</div>
+    <p>I really would like to get to know you better, and I don't have much time left here, so please let me take you out this weekend.</p>
+    <p>I think you are really very beautiful.</p>
+    <p>Saturday the 21st, at 14:00. Wear whatever you're comfortable in.</p>
+    <p class="ask">Will you please go out with me?</p>
+  </div>
+  <div class="sign">Abdullah</div>
+  <div class="tag">written by me, for you</div>
+
+  <div class="choices" id="choices">
+    <a class="btn yes" id="yes" href="#" target="_blank" rel="noopener">Yes</a>
+    <button class="btn maybe" id="maybe" type="button">Maybe</button>
+    <button class="btn no" id="no" type="button">No</button>
+  </div>
+</main>
+
+<script>
+  // Abdullah's WhatsApp number, international format, no + or spaces
+  var NUMBER = "27780120351";
+  var TEXT = "Hi Abdullah, it's Naeemah. Yes, I'll go out with you.";
+
+  document.getElementById("yes").href = "https://wa.me/" + NUMBER + "?text=" + encodeURIComponent(TEXT);
+
+  var gate = document.getElementById("gate");
+  var letter = document.getElementById("letter");
+  gate.addEventListener("click", function(){
+    gate.classList.add("gone");
+    letter.classList.add("show");
+  });
+
+  var box = document.getElementById("choices");
+  var maybe = document.getElementById("maybe");
+  var no = document.getElementById("no");
+
+  // Maybe jumps somewhere else every time she goes near it
+  function jump(e){
+    if (e) e.preventDefault();
+    var w = box.clientWidth - maybe.offsetWidth;
+    var h = box.clientHeight - maybe.offsetHeight;
+    maybe.style.left = Math.max(0, Math.random() * w) + "px";
+    maybe.style.top = Math.max(0, Math.random() * h) + "px";
+  }
+  maybe.addEventListener("pointerenter", jump);
+  maybe.addEventListener("pointerdown", jump);
+  maybe.addEventListener("click", jump);
+
+  // No disappears
+  function vanish(e){
+    if (e) e.preventDefault();
+    no.classList.add("vanish");
+    setTimeout(function(){ no.style.display = "none"; }, 450);
+  }
+  no.addEventListener("pointerenter", vanish);
+  no.addEventListener("click", vanish);
+</script>
+</body>
+</html>
